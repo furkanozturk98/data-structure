@@ -20,17 +20,21 @@ void printLinkedList(node * r){
 	printf("\n");
 }
 
+node * getNewNode(){
+	return (node *)malloc(sizeof(node));
+}
+
 node * addInOrder(node * r,int data){
 	
 	if(r == NULL){
-		r = (node * )malloc(sizeof(node));
+		r = getNewNode();
 		r->next = NULL;
 		r->data = data;
 		return r;
 	}
 	
 	if(r->data > data){
-		node * temp = (node *)malloc(sizeof(node));
+		node * temp = getNewNode();
 		temp->data = data;
 		temp->next = r;
 
@@ -45,7 +49,7 @@ node * addInOrder(node * r,int data){
 	}
 
 	
-	node * temp = (node *)malloc(sizeof(node));
+	node * temp = getNewNode();
 	temp->next=iter->next;
 	iter->next=temp;
 	temp->data = data;
@@ -53,11 +57,52 @@ node * addInOrder(node * r,int data){
 	return r;
 }
 
+node * addToHead(node * r,int data){
+	
+	if(r == NULL){
+		r = getNewNode();
+		r->next = NULL;
+		r->data = data;
+		return r;
+	}
+	
+	node * newNode = getNewNode();
+
+	newNode->next = r;
+	newNode->data = data;
+	r = newNode;
+
+	return r;
+}
+
+node * addToEnd(node * r,int data){
+	
+	if(r == NULL){
+		r = getNewNode();
+		r->next = NULL;
+		r->data = data;
+		return r;
+	}
+	
+	node * iter = r;
+	
+	while(iter->next != NULL){
+		iter = iter->next;
+	}
+
+	
+	node * temp = getNewNode();
+	temp->next = iter->next;
+	iter->next = temp;
+	temp->data = data;
+
+	return r;
+}
+
 node * deleteByData(node * r,int data){
 	
-	node *iter;
+	node *iter = r;
 	node * temp;
-	iter=r;
 
 	if(r->data == data){
 		temp = r;
@@ -84,6 +129,40 @@ node * deleteByData(node * r,int data){
 	return r;
 }
 
+node * deleteByIndex(node * r,int index){
+	
+	node * iter = r;
+	node * temp;
+
+	if(index == 0){
+		temp = r;
+		r = r->next;
+		free(temp);
+
+		return r;
+	}
+
+	int counter = 1;
+
+	while(iter->next != NULL && counter != index){
+		iter = iter->next;
+
+		counter ++;
+	}
+
+	if(iter->next == NULL){
+		printf("Could not find the index %d \n", index);
+
+		return r;
+	}
+	
+	temp = iter->next;
+	iter->next = iter->next->next;
+	free(temp);
+
+	return r;
+}
+
 
 int main()
 {
@@ -98,13 +177,19 @@ int main()
 
 	printLinkedList(root);
 
-	root = deleteByData(root,450);
+	//root = deleteByData(root,450);
 
 	// test nonexistent
-	root = deleteByData(root,855);
+	//root = deleteByData(root,855);
+
+	/*root = addToHead(root, 22);
+	root = addToHead(root, 99);*/
+
+	//root = addToEnd(root, 1);
+
+	root = deleteByIndex(root, 4);
 
 	printLinkedList(root);
-
 
    return 0;
 }
