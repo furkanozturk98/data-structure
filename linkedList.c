@@ -99,6 +99,30 @@ node * addToEnd(node * r,int data){
 	return r;
 }
 
+void addAfter(node *head, int index, int data){
+	
+	int i;
+	if(index <= 0){
+		return;
+	}
+		
+	for(i = 0;i < index - 1; i++){
+		head = head->next;
+
+		if(head == NULL){
+			printf("There is less than %d elements\nf", index);
+			return;
+		}
+	}
+	
+	node * temp = getNewNode();
+	
+	temp->data = data;
+	temp->next = head->next;
+	
+	head->next = temp;
+}
+
 node * deleteByData(node * r,int data){
 	
 	node *iter = r;
@@ -188,6 +212,11 @@ int main()
 	//root = addToEnd(root, 1);
 
 	root = deleteByIndex(root, 4);
+
+	addAfter(root, 1 , 10);
+	addAfter(root, 1 , 100);
+
+	addAfter(root, 15 , 100);
 
 	printLinkedList(root);
 
