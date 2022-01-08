@@ -190,8 +190,7 @@ node * deleteByIndex(node * r,int index){
 
 int main()
 {
-    node * root;
-	root = NULL;
+    node * root = NULL;
 	
 	root = addInOrder(root,450);
 	root = addInOrder(root,4);

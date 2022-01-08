@@ -204,7 +204,6 @@ void deleteByIndex(struct Node **head, int index){
 }
 
 
-
 int main(int argc, char *argv[]) {
 	
 	struct Node * head = NULL;
